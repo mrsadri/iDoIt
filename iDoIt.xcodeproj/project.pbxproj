@@ -7,14 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92B9EDFAAB22FC6DC577C5A1 /* Pods_iDoIt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF3F3BB071F0A8975E61863 /* Pods_iDoIt.framework */; };
+		CE44026B21B1CE39009E0300 /* GroupManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */; };
+		CE9633FD21AE8E3C00FFBD14 /* TableDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */; };
+		CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */; };
 		CEE552F121AE8947009DE56F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE552F021AE8947009DE56F /* AppDelegate.swift */; };
 		CEE552F321AE8947009DE56F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE552F221AE8947009DE56F /* ViewController.swift */; };
 		CEE552F621AE8947009DE56F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F421AE8947009DE56F /* Main.storyboard */; };
 		CEE552F821AE8949009DE56F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F721AE8949009DE56F /* Assets.xcassets */; };
 		CEE552FB21AE8949009DE56F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F921AE8949009DE56F /* LaunchScreen.storyboard */; };
+		CEE5530321AE8C19009DE56F /* TalkToServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE5530221AE8C19009DE56F /* TalkToServer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1AF3F3BB071F0A8975E61863 /* Pods_iDoIt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iDoIt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		62DE0E1099187D30FA5EB63C /* Pods-iDoIt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iDoIt.release.xcconfig"; path = "Pods/Target Support Files/Pods-iDoIt/Pods-iDoIt.release.xcconfig"; sourceTree = "<group>"; };
+		80ED119AC253B3107EB09611 /* Pods-iDoIt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iDoIt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iDoIt/Pods-iDoIt.debug.xcconfig"; sourceTree = "<group>"; };
+		CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManagerViewController.swift; sourceTree = "<group>"; };
+		CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDataModel.swift; sourceTree = "<group>"; };
+		CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
 		CEE552ED21AE8947009DE56F /* iDoIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDoIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE552F021AE8947009DE56F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEE552F221AE8947009DE56F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +33,7 @@
 		CEE552F721AE8949009DE56F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEE552FA21AE8949009DE56F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEE552FC21AE8949009DE56F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEE5530221AE8C19009DE56F /* TalkToServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkToServer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +41,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92B9EDFAAB22FC6DC577C5A1 /* Pods_iDoIt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00E774653D6DF45B6B5EC3D5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				80ED119AC253B3107EB09611 /* Pods-iDoIt.debug.xcconfig */,
+				62DE0E1099187D30FA5EB63C /* Pods-iDoIt.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CEE552E421AE8947009DE56F = {
 			isa = PBXGroup;
 			children = (
 				CEE552EF21AE8947009DE56F /* iDoIt */,
 				CEE552EE21AE8947009DE56F /* Products */,
+				00E774653D6DF45B6B5EC3D5 /* Pods */,
+				D282F4D4DE0C34E51FAB7E02 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +78,26 @@
 		CEE552EF21AE8947009DE56F /* iDoIt */ = {
 			isa = PBXGroup;
 			children = (
+				CEE5530221AE8C19009DE56F /* TalkToServer.swift */,
 				CEE552F021AE8947009DE56F /* AppDelegate.swift */,
 				CEE552F221AE8947009DE56F /* ViewController.swift */,
+				CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */,
+				CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */,
+				CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */,
 				CEE552F421AE8947009DE56F /* Main.storyboard */,
 				CEE552F721AE8949009DE56F /* Assets.xcassets */,
 				CEE552F921AE8949009DE56F /* LaunchScreen.storyboard */,
 				CEE552FC21AE8949009DE56F /* Info.plist */,
 			);
 			path = iDoIt;
+			sourceTree = "<group>";
+		};
+		D282F4D4DE0C34E51FAB7E02 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1AF3F3BB071F0A8975E61863 /* Pods_iDoIt.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +107,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CEE552FF21AE8949009DE56F /* Build configuration list for PBXNativeTarget "iDoIt" */;
 			buildPhases = (
+				5D9B03875FDDDB8102B66829 /* [CP] Check Pods Manifest.lock */,
 				CEE552E921AE8947009DE56F /* Sources */,
 				CEE552EA21AE8947009DE56F /* Frameworks */,
 				CEE552EB21AE8947009DE56F /* Resources */,
+				5AF13D8C009640B8A3F28728 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -130,12 +168,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5AF13D8C009640B8A3F28728 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-iDoIt/Pods-iDoIt-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iDoIt/Pods-iDoIt-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5D9B03875FDDDB8102B66829 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iDoIt-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CEE552E921AE8947009DE56F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */,
+				CEE5530321AE8C19009DE56F /* TalkToServer.swift in Sources */,
 				CEE552F321AE8947009DE56F /* ViewController.swift in Sources */,
+				CE9633FD21AE8E3C00FFBD14 /* TableDataModel.swift in Sources */,
+				CE44026B21B1CE39009E0300 /* GroupManagerViewController.swift in Sources */,
 				CEE552F121AE8947009DE56F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +363,7 @@
 		};
 		CEE5530021AE8949009DE56F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80ED119AC253B3107EB09611 /* Pods-iDoIt.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -298,6 +382,7 @@
 		};
 		CEE5530121AE8949009DE56F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62DE0E1099187D30FA5EB63C /* Pods-iDoIt.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
