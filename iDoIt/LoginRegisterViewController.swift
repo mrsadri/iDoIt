@@ -24,8 +24,8 @@ class LoginRegisterViewController: UIViewController , AccessToLoginRegistrationP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        TalkToServer.sharedObject.isItFirstTimeToSetWholeData = true
-        TalkToServer.sharedObject.delegateToAccessLoginPage = self
+        DataManager.sharedObject.isItFirstTimeToSetWholeData = true
+        DataManager.sharedObject.delegateToAccessLoginPage = self
         // Do any additional setup after loading the view.
     }
     
@@ -50,12 +50,12 @@ class LoginRegisterViewController: UIViewController , AccessToLoginRegistrationP
             let lastName : String = lastNameTextField.text ?? "No Last Name"
             let email : String = emailTextField.text ?? "No Email"
             let thisPass : String = passWordTextField.text ?? "Ali123"
-            TalkToServer.sharedObject.register(firstName: name, lastName: lastName, password: thisPass, email: email)
+            DataManager.sharedObject.register(firstName: name, lastName: lastName, password: thisPass, email: email)
         } else {
             //Login
             let email : String = emailTextField.text ?? "No Email"
             let thisPass : String = passWordTextField.text ?? "Ali123"
-            TalkToServer.sharedObject.login(email: email, password: thisPass)
+            DataManager.sharedObject.login(email: email, password: thisPass)
         }
     }
     

@@ -16,7 +16,7 @@
 		CEE552F621AE8947009DE56F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F421AE8947009DE56F /* Main.storyboard */; };
 		CEE552F821AE8949009DE56F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F721AE8949009DE56F /* Assets.xcassets */; };
 		CEE552FB21AE8949009DE56F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F921AE8949009DE56F /* LaunchScreen.storyboard */; };
-		CEE5530321AE8C19009DE56F /* TalkToServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE5530221AE8C19009DE56F /* TalkToServer.swift */; };
+		CEE5530321AE8C19009DE56F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE5530221AE8C19009DE56F /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,7 @@
 		CEE552F721AE8949009DE56F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEE552FA21AE8949009DE56F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEE552FC21AE8949009DE56F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEE5530221AE8C19009DE56F /* TalkToServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkToServer.swift; sourceTree = "<group>"; };
+		CEE5530221AE8C19009DE56F /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +78,7 @@
 		CEE552EF21AE8947009DE56F /* iDoIt */ = {
 			isa = PBXGroup;
 			children = (
-				CEE5530221AE8C19009DE56F /* TalkToServer.swift */,
+				CEE5530221AE8C19009DE56F /* DataManager.swift */,
 				CEE552F021AE8947009DE56F /* AppDelegate.swift */,
 				CEE552F221AE8947009DE56F /* ViewController.swift */,
 				CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */,
@@ -215,7 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */,
-				CEE5530321AE8C19009DE56F /* TalkToServer.swift in Sources */,
+				CEE5530321AE8C19009DE56F /* DataManager.swift in Sources */,
 				CEE552F321AE8947009DE56F /* ViewController.swift in Sources */,
 				CE9633FD21AE8E3C00FFBD14 /* TableDataModel.swift in Sources */,
 				CE44026B21B1CE39009E0300 /* GroupManagerViewController.swift in Sources */,

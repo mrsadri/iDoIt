@@ -10,9 +10,12 @@ import UIKit
 
 protocol AccessToTableView {
     func reloadTableData()
+    func selfDismiss()
 }
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AccessToTableView {
+    
+    static var delegateOfGroupManagerPage : AccessToGroupManagerPage!
     
     var dataToLoadThisTable :  [TableDataModel] = [ TableDataModel(groupData: (groupName: "Loading...", groupID: "Loading..."), tasksData: [(taskName: "Tasks are loading...", taskID: "1", taskDescription: "Wait..", doneStatus: true )] ) ] {
         didSet{
@@ -20,9 +23,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    var isGroupManagerPageActivated = Bool()
+    
     func reloadTableData() {
         dataToLoadThisTable = wholeDate
-        self.mainTable.reloadData()
+        if isGroupManagerPageActivated {
+            ViewController.delegateOfGroupManagerPage.reloadTableData()
+            self.mainTable.reloadData()
+            //self.delegateOfGroupManagerPage.reloadTableData()
+            print("---- \nDebug:nil is reported here, I want to know when this is called")
+        } else {
+            self.mainTable.reloadData()
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -57,7 +69,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let remove = UITableViewRowAction(style: .normal, title: "Remove") { action, index in
             //remove From server
-            TalkToServer.sharedObject.deleteTask(task_id: self.dataToLoadThisTable[editActionsForRowAt.section].tasksData[editActionsForRowAt.row].taskID)
+            DataManager.sharedObject.deleteTask(task_id: self.dataToLoadThisTable[editActionsForRowAt.section].tasksData[editActionsForRowAt.row].taskID)
         }
         remove.backgroundColor = .red
         
@@ -72,6 +84,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         done.backgroundColor = .green
         
         return [done, edit, remove]
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == dataToLoadThisTable[indexPath.section].tasksData.count {
+            return false
+        } else {
+            return true
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -95,7 +115,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
             let taskId = self.dataToLoadThisTable[indexPath.section].tasksData[indexPath.item].taskID
-            TalkToServer.sharedObject.deleteTask(task_id: taskId)
+            DataManager.sharedObject.deleteTask(task_id: taskId)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
@@ -114,6 +134,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.mainTable.deselectRow(at: indexPath, animated: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.isGroupManagerPageActivated = false
+    }
     
     @IBOutlet weak var mainTable: UITableView!
     override func viewDidLoad() {
@@ -121,7 +144,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Do any additional setup after loading the view, typically from a nib.
         mainTable.delegate = self
         mainTable.dataSource = self
-        TalkToServer.sharedObject.delegateToAcessTableView = self
+        DataManager.sharedObject.delegateToAcessTableView = self
         self.dataToLoadThisTable = wholeDate
     }
     
@@ -149,7 +172,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         let addAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            TalkToServer.sharedObject.updateTask(task_id: taskID, group_id: groupID, taskName: newTaskTitle.text!, taskDescription: newTaskDescription.text!)
+            DataManager.sharedObject.updateTask(task_id: taskID, group_id: groupID, taskName: newTaskTitle.text!, taskDescription: newTaskDescription.text!)
         }
         
         
@@ -187,7 +210,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             let addAction = UIAlertAction(title: "OK", style: .default) { (action) in
                 
-                TalkToServer.sharedObject.createTask(group_id: groupID, taskName: newTaskTitle.text!, taskDescription: newTaskDescription.text!)
+                DataManager.sharedObject.createTask(group_id: groupID, taskName: newTaskTitle.text!, taskDescription: newTaskDescription.text!)
             }
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel ) { (action) in
@@ -205,7 +228,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func addNewGroup(){
         
-        let alertToEditTask = UIAlertController(title: "Add New Task", message: nil , preferredStyle: .alert )
+        let alertToEditTask = UIAlertController(title: "Add New Group", message: nil , preferredStyle: .alert )
         
         var newGroupName  = UITextField()
         
@@ -215,7 +238,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         let addAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            TalkToServer.sharedObject.createGroup(groupName: newGroupName.text!)
+            DataManager.sharedObject.createGroup(groupName: newGroupName.text!)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel ) { (action) in
@@ -232,9 +255,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     
     @IBAction func logOutAction(_ sender: UIButton) {
-        TalkToServer.sharedObject.tokenKeeper = ""
-        TalkToServer.sharedObject.tableSections = []
-        TalkToServer.sharedObject.isItFirstTimeToSetWholeData = true
+        DataManager.sharedObject.tokenKeeper = ""
+        DataManager.sharedObject.tableSections = []
+        DataManager.sharedObject.isItFirstTimeToSetWholeData = true
         self.dismiss(animated: true) {
             //nothing
         }
@@ -249,7 +272,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.present(groupPage, animated: false) {
             //nothing
         }
+        self.isGroupManagerPageActivated = true
     }
     
+    func selfDismiss() {
+        self.dismiss(animated: false, completion: nil)
+    }
 }
 

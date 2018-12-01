@@ -19,7 +19,7 @@ protocol toAccessHomeFunctions {
     func setTimerFirstValue(input: String)
 }
 
-class TalkToServer {
+class DataManager {
     
     var delegateToAcessTableView : AccessToTableView!
     var delegateToAccessLoginPage : AccessToLoginRegistrationPage!
@@ -80,11 +80,10 @@ class TalkToServer {
     }
     var responseKeeper : (body: JSON, header: JSON) = (body: JSON(""), header: JSON(""))
     var tableSections = [TableDataModel]()
-    //SingleTone Pattern
+
     private init() {
-        //TODO: Get token from Plist
     }
-    static let sharedObject = TalkToServer.init()
+    static let sharedObject = DataManager.init()
     
     func register(firstName: String, lastName: String, password: String, email: String) {
         
@@ -95,20 +94,23 @@ class TalkToServer {
                               "password"    : password,
                               "email"       : email]
         
-        requester(url: thisUrl, headers: headers, bodyparameters: bodyparameters)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-            
-            if self.responseKeeper.body["message"].stringValue == "ok" {
-                print(self.responseKeeper)
-                self.tokenKeeper = self.responseKeeper.header["token"].stringValue
-                self.userData.firstName = self.responseKeeper.body  ["body"]["first_name"].stringValue
-                self.userData.lastName  = self.responseKeeper.body["body"]["last_name" ].stringValue
-            } else {
-                self.tokenKeeper = ""
+        Alamofire.request(thisUrl, method: .post, parameters: bodyparameters , headers: headers).responseJSON { (response) in
+            if response.result.isSuccess {
+                //---
+                let jsonKeeperBody : JSON = JSON(response.result.value!)
+                let jsonKeeperHeader : JSON = JSON(response.response!.allHeaderFields)
+                self.responseKeeper = (body: jsonKeeperBody, header: jsonKeeperHeader)
+                //---
+                if self.responseKeeper.body["message"].stringValue == "ok" {
+                    print(self.responseKeeper)
+                    self.tokenKeeper = self.responseKeeper.header["token"].stringValue
+                    self.userData.firstName = self.responseKeeper.body  ["body"]["first_name"].stringValue
+                    self.userData.lastName  = self.responseKeeper.body["body"]["last_name" ].stringValue
+                } else {
+                    self.tokenKeeper = ""
+                }
             }
         }
-        
     }
     
     func login(email: String, password: String) {
@@ -117,18 +119,21 @@ class TalkToServer {
         let headers: HTTPHeaders = ["Content-Type": "application/x-www-form-urlencoded"]
         let bodyparameters = ["email" : email ,
                               "password" : password]
-        
-        requester(url: thisUrl, headers: headers, bodyparameters: bodyparameters)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6){
-            print(self.responseKeeper)
-            
-            if self.responseKeeper.body["message"].stringValue == "ok" {
-                self.tokenKeeper = self.responseKeeper.header["token"].stringValue
-                self.userData.firstName = self.responseKeeper.body  ["body"]["first_name"].stringValue
-                self.userData.lastName  = self.responseKeeper.body["body"]["last_name" ].stringValue
-            } else {
-                self.tokenKeeper = ""
+        Alamofire.request(thisUrl, method: .post, parameters: bodyparameters , headers: headers).responseJSON { (response) in
+            if response.result.isSuccess {
+                //---
+                let jsonKeeperBody : JSON = JSON(response.result.value!)
+                let jsonKeeperHeader : JSON = JSON(response.response!.allHeaderFields)
+                self.responseKeeper = (body: jsonKeeperBody, header: jsonKeeperHeader)
+                //---
+                if self.responseKeeper.body["message"].stringValue == "ok" {
+                    self.tokenKeeper = self.responseKeeper.header["token"].stringValue
+                    self.userData.firstName = self.responseKeeper.body  ["body"]["first_name"].stringValue
+                    self.userData.lastName  = self.responseKeeper.body["body"]["last_name" ].stringValue
+                    print("Time control....1")
+                } else {
+                    self.tokenKeeper = ""
+                }
             }
         }
         
@@ -137,7 +142,7 @@ class TalkToServer {
     func createGroup(groupName: String) {
         
         let thisUrl = "http://buzztaab.com:8081/api/createGroup/"
-        let headers: HTTPHeaders = ["authorization" :/* "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzYwYWM4ZWQtMzhkMy00ZjUzLWE3YjItOWFkOWIzYmRhNjRhIiwiaWF0IjoxNTM5MjUwNTg2fQ.exeb-WXsM06aWMtInkQcaoK7hKJ9NGrUpQUsHkKBdIk"*/  "Bearer \(tokenKeeper)",
+        let headers: HTTPHeaders = ["authorization" : "Bearer \(tokenKeeper)",
             "Content-Type": "application/x-www-form-urlencoded"]
         let bodyparameters = ["groupName": groupName ]
         
@@ -165,30 +170,24 @@ class TalkToServer {
     func deleteGroup(group_id: String)  {
         
         //Since you just know the name of grups not their ID, You may need name of group and call get_Groupe and find the ID of the Group then call this func byt the ID! // another way solved this
+        //LocalSide:
+        var placeOfRemovedGroup = Int()
+        for index in 0...(self.tableSections.count - 1){
+            if self.tableSections[index].groupData.groupID == group_id {
+                placeOfRemovedGroup = index
+                //TODO: write self.tableRows to Plist and reload table
+            }
+        }
+        self.tableSections.remove(at: placeOfRemovedGroup)
+        isReadyToReload = true
         
+        //ServerSide:
         let thisUrl = "http://buzztaab.com:8081/api/deleteGroup/"
-        let headers: HTTPHeaders = ["authorization" :/* "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzYwYWM4ZWQtMzhkMy00ZjUzLWE3YjItOWFkOWIzYmRhNjRhIiwiaWF0IjoxNTM5MjUwNTg2fQ.exeb-WXsM06aWMtInkQcaoK7hKJ9NGrUpQUsHkKBdIk"*/  "Bearer \(tokenKeeper)",
+        let headers: HTTPHeaders = ["authorization" : "Bearer \(tokenKeeper)",
             "Content-Type": "application/x-www-form-urlencoded"]
         let bodyparameters = ["group_id": group_id ]
         
         requester(url: thisUrl, headers: headers, bodyparameters: bodyparameters)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-            // BUG: server always rspond "OK"
-            
-            if self.responseKeeper.body["message"].stringValue == "ok" {
-                print(self.responseKeeper)
-                for index in 0...(self.tableSections.count - 1){
-                    if self.tableSections[index].groupData.groupID == group_id {
-                        self.tableSections.remove(at: index)
-                        //TODO: write self.tableRows to Plist and reload table
-                    }
-                }
-            } else {
-                //nothing
-            }
-        }
-        
     }
     
     func getGroup(group_id: String = "1") {
@@ -236,7 +235,7 @@ class TalkToServer {
                         //                    self.tableRows[index].groupData.groupName = self.responseKeeper.body["body"][index]["name"].stringValue
                     }
                 }
-                self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.getTasksQueue), userInfo: nil, repeats: true)
+                self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.getTasksQueue), userInfo: nil, repeats: true)
                 
                 //                for groupIndex in 0...(self.tableRows.count - 1) {
                 //                    self.get_Task(group_id: self.tableRows[groupIndex].groupData.groupID)
@@ -248,14 +247,7 @@ class TalkToServer {
             }
         }
         
-        //here tell to Home Screen How much does it take
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-            print("check why timer is 14")
-            print(self.tableSections)
-            let catchTime : String = String(self.tableSections.count * 2 + 2)
-            print("time to catch data: \(catchTime)")
-           // self.delegetionForThisClass.setTimerFirstValue(input: howManyGroups)
-        }
+        //TODO: impliment Loading Bar |||| here tell to Home Screen How much does it take
     }
     
     @objc func getTasksQueue(){
@@ -272,6 +264,14 @@ class TalkToServer {
     }
     
     func updateGroup(groupName: String, group_id: String){ //Change Group name
+        //localSide:
+        for index in 0...(self.tableSections.count - 1) {
+            if self.tableSections[index].groupData.groupID == group_id {
+                self.tableSections[index].groupData.groupName = groupName
+            }
+            self.isReadyToReload = true
+        }
+        //serverSide:
         
         //As same as "DeleteGroup" you just know the name of group not its ID
         let thisUrl = "http://buzztaab.com:8081/api/updateGroup/"
@@ -279,26 +279,7 @@ class TalkToServer {
             "Content-Type": "application/x-www-form-urlencoded"]
         let bodyparameters = ["groupName":groupName, "group_id": group_id ]
         
-        requester(url: thisUrl, headers: headers, bodyparameters: bodyparameters)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-            // BUG: server always rspond "OK"
-            if self.responseKeeper.body["message"].stringValue == "ok" {
-                print(self.responseKeeper)
-                //count the JSON parameters in body then write a for here
-                for index in 0...(self.tableSections.count - 1){
-                    if self.tableSections[index].groupData.groupID == group_id {
-                        self.tableSections[index].groupData.groupName = groupName
-                        //TODO: write self.tableRows to Plist and reload table
-                    }
-                }
-                
-                
-            } else {
-                //nothing
-            }
-        }
-        
+        requester(url: thisUrl, headers: headers, bodyparameters: bodyparameters)        
     }
     
     
@@ -376,7 +357,6 @@ class TalkToServer {
             "Content-Type": "application/x-www-form-urlencoded"]
         let bodyparameters = ["task_id": task_id ]
         
-        
         requester(url: thisUrl, headers: headers, bodyparameters: bodyparameters)
         
     }
@@ -388,49 +368,99 @@ class TalkToServer {
             "Content-Type": "application/x-www-form-urlencoded"]
         let bodyparameters = ["group_id": group_id ]
         
-        requester(url: thisUrl, headers: headers, bodyparameters: bodyparameters)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-            // BUG: server always rspond "OK"
-            if self.responseKeeper.body["message"].stringValue == "ok" {
-                if self.responseKeeper.body["body"].count != 0 {
-                    print(self.responseKeeper.body["body"])
-                    
-                }
-                /*TODO:
-                 1: empty the list of tasks (ie TaskData)
-                 2: Find the section(ie Group) by groupID
-                 3: then apend items 1by1 to it*/
+        Alamofire.request(thisUrl, method: .post, parameters: bodyparameters , headers: headers).responseJSON { (response) in
+            if response.result.isSuccess {
+                //---
+                let jsonKeeperBody : JSON = JSON(response.result.value!)
+                let jsonKeeperHeader : JSON = JSON(response.response!.allHeaderFields)
+                let ThisResponseKeeper = (body: jsonKeeperBody, header: jsonKeeperHeader)
+                //---
                 
-                //count the JSON parameters in body then write a for here
-                if self.responseKeeper.body["body"].count != 0 {
-                    //1
-                    for indexM in 0...self.tableSections.count-1 {
-                        if self.tableSections[indexM].groupData.groupID == group_id {
-                            self.tableSections[indexM].tasksData = []
-                        }
+                    if ThisResponseKeeper.body["message"].stringValue == "ok" {
+                    if ThisResponseKeeper.body["body"].count != 0 {
+                        print(ThisResponseKeeper.body["body"])
+                        
                     }
-                    for index in 0...self.responseKeeper.body["body"].count-1 {
-                        let taskDataM = (taskName: self.responseKeeper.body["body"][index]["taskName"       ].stringValue,
-                                         taskID:   self.responseKeeper.body["body"][index]["id"             ].stringValue,
-                                         taskDescription:  self.responseKeeper.body["body"][index]["taskDescription"].stringValue,
-                                         doneStatus: false)
-                        //2: Find the section(ie Group) by groupID
+                    /*TODO:
+                     1: empty the list of tasks (ie TaskData)
+                     2: Find the section(ie Group) by groupID
+                     3: then apend items 1by1 to it*/
+                    
+                    //count the JSON parameters in body then write a for here
+                    if ThisResponseKeeper.body["body"].count != 0 {
+                        //1
                         for indexM in 0...self.tableSections.count-1 {
                             if self.tableSections[indexM].groupData.groupID == group_id {
-                                //3
-                                self.tableSections[indexM].tasksData.append(taskDataM)
+                                self.tableSections[indexM].tasksData = []
+                            }
+                        }
+                        for index in 0...ThisResponseKeeper.body["body"].count-1 {
+                            let taskDataM = (taskName: ThisResponseKeeper.body["body"][index]["taskName"       ].stringValue,
+                                             taskID:   ThisResponseKeeper.body["body"][index]["id"             ].stringValue,
+                                             taskDescription:  ThisResponseKeeper.body["body"][index]["taskDescription"].stringValue,
+                                             doneStatus: false)
+                            //2: Find the section(ie Group) by groupID
+                            for indexM in 0...self.tableSections.count-1 {
+                                if self.tableSections[indexM].groupData.groupID == group_id {
+                                    //3
+                                    self.tableSections[indexM].tasksData.append(taskDataM)
+                                }
                             }
                         }
                     }
-                }
-                //TODO: write self.tableRows to Plist and reload table
-                
-            } else {
-                //nothing
-                //self.timer?.invalidate()
+                    //TODO: write self.tableRows to Plist and reload table
+                    
+                } else {
+                    //nothing
+                    //self.timer?.invalidate()
+                    }
+                //---
             }
         }
+        
+//        requester(url: thisUrl, headers: headers, bodyparameters: bodyparameters)
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+////            // BUG: server always rspond "OK"
+////            if self.responseKeeper.body["message"].stringValue == "ok" {
+////                if self.responseKeeper.body["body"].count != 0 {
+////                    print(self.responseKeeper.body["body"])
+////
+////                }
+////                /*TODO:
+////                 1: empty the list of tasks (ie TaskData)
+////                 2: Find the section(ie Group) by groupID
+////                 3: then apend items 1by1 to it*/
+////
+////                //count the JSON parameters in body then write a for here
+////                if self.responseKeeper.body["body"].count != 0 {
+////                    //1
+////                    for indexM in 0...self.tableSections.count-1 {
+////                        if self.tableSections[indexM].groupData.groupID == group_id {
+////                            self.tableSections[indexM].tasksData = []
+////                        }
+////                    }
+////                    for index in 0...self.responseKeeper.body["body"].count-1 {
+////                        let taskDataM = (taskName: self.responseKeeper.body["body"][index]["taskName"       ].stringValue,
+////                                         taskID:   self.responseKeeper.body["body"][index]["id"             ].stringValue,
+////                                         taskDescription:  self.responseKeeper.body["body"][index]["taskDescription"].stringValue,
+////                                         doneStatus: false)
+////                        //2: Find the section(ie Group) by groupID
+////                        for indexM in 0...self.tableSections.count-1 {
+////                            if self.tableSections[indexM].groupData.groupID == group_id {
+////                                //3
+////                                self.tableSections[indexM].tasksData.append(taskDataM)
+////                            }
+////                        }
+////                    }
+////                }
+////                //TODO: write self.tableRows to Plist and reload table
+////
+////            } else {
+////                //nothing
+////                //self.timer?.invalidate()
+////            }
+//        }
         
     }
     
@@ -460,7 +490,7 @@ class TalkToServer {
         }
         
         let thisUrl = "http://buzztaab.com:8081/api/updateTask/"
-        let headers: HTTPHeaders = ["authorization" : /*"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzYwYWM4ZWQtMzhkMy00ZjUzLWE3YjItOWFkOWIzYmRhNjRhIiwiaWF0IjoxNTM5MjUwNTg2fQ.exeb-WXsM06aWMtInkQcaoK7hKJ9NGrUpQUsHkKBdIk", */  "Bearer \(tokenKeeper)",
+        let headers: HTTPHeaders = ["authorization" : "Bearer \(tokenKeeper)",
             "Content-Type": "application/x-www-form-urlencoded"]
         let bodyparameters = ["task_id":task_id,
                               "groupId":"1",
@@ -520,6 +550,7 @@ class TalkToServer {
     }
     
 }
+//valid toket : /*"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzYwYWM4ZWQtMzhkMy00ZjUzLWE3YjItOWFkOWIzYmRhNjRhIiwiaWF0IjoxNTM5MjUwNTg2fQ.exeb-WXsM06aWMtInkQcaoK7hKJ9NGrUpQUsHkKBdIk", */
 //- Note: SingleTone pattern is not suitable for this case and I have to use delegation pattern
 //- TODO: Define a requester func to call alamofire with header, body, and url and return bodyJSON and HeaderJSON :Done
 //- TODO: if token == "" ban all this funcs: get_Group, createGroup, ...

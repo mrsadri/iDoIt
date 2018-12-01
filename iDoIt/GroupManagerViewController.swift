@@ -8,7 +8,11 @@
 
 import UIKit
 
-class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
+protocol AccessToGroupManagerPage {
+    func reloadTableData()
+}
+
+class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, AccessToGroupManagerPage {
     
     var dataToLoadGroupTable : [(groupName: String, groupID: String)] = [(groupName: "Loading...", groupID: "Loading...")] {
         didSet{
@@ -16,9 +20,7 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
         }
     }
     
-    
     func reloadTableData() {
-        
         dataToLoadGroupTable = []
         if wholeDate.count > 0 {
         for index in 0...wholeDate.count-1 {
@@ -48,15 +50,10 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
     
     //---
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-        
-        if editActionsForRowAt.row == dataToLoadGroupTable.count {
-            return nil
-            
-        } else {
             
             let remove = UITableViewRowAction(style: .normal, title: "Remove") { action, index in
                 let groupID = self.dataToLoadGroupTable[editActionsForRowAt.row].groupID
-                TalkToServer.sharedObject.deleteGroup(group_id: groupID)
+                DataManager.sharedObject.deleteGroup(group_id: groupID)
             }
             remove.backgroundColor = .red
             
@@ -66,8 +63,14 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
             edit.backgroundColor = .lightGray
             
             return [edit, remove]
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == dataToLoadGroupTable.count {
+            return false
+        } else {
+            return true
         }
-
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -88,7 +91,7 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
             }
             
             let removeAction = UIAlertAction(title: "Remove This Group", style: .destructive) { (action) in
-                TalkToServer.sharedObject.deleteGroup(group_id: groupID)
+                DataManager.sharedObject.deleteGroup(group_id: groupID)
             }
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
@@ -122,7 +125,7 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
         }
         
         let addAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            TalkToServer.sharedObject.updateGroup(groupName: newGroupTitle.text!, group_id: groupID)
+            DataManager.sharedObject.updateGroup(groupName: newGroupTitle.text!, group_id: groupID)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel ) { (action) in
@@ -149,7 +152,7 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
         }
         
         let addAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            TalkToServer.sharedObject.createGroup(groupName: newGroupName.text!)
+            DataManager.sharedObject.createGroup(groupName: newGroupName.text!)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel ) { (action) in
@@ -167,8 +170,13 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
     @IBOutlet weak var groupTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let mainTablePage = storyboard?.instantiateViewController(withIdentifier: "mainPage") as! ViewController
+//        mainTablePage.delegateOfGroupManagerPage = self
+        ViewController.delegateOfGroupManagerPage = self
+        print("------ \nDebug:here a delegate is its own value")
         groupTable.delegate = self
         groupTable.dataSource = self
+
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -177,10 +185,19 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
     }
     
     @IBAction func logOutAction(_ sender: UIButton) {
+        DataManager.sharedObject.tokenKeeper = ""
+        DataManager.sharedObject.tableSections = []
+        DataManager.sharedObject.isItFirstTimeToSetWholeData = true
+        self.dismiss(animated: true) {
+            //nothing
+        }
+        DataManager.sharedObject.delegateToAcessTableView.selfDismiss()
+
+        
     }
     
     @IBAction func backButton(_ sender: UIButton) {
-        self.dismiss(animated: false) {
+        self.dismiss(animated: true) {
             //nothing
         }
     }
