@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		92B9EDFAAB22FC6DC577C5A1 /* Pods_iDoIt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF3F3BB071F0A8975E61863 /* Pods_iDoIt.framework */; };
+		CE2DEB3321B3E272002AEFCA /* FirstPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2DEB3221B3E272002AEFCA /* FirstPageViewController.swift */; };
 		CE44026B21B1CE39009E0300 /* GroupManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */; };
+		CE684F2C21B4910D008666A8 /* TextFieldM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE684F2B21B4910D008666A8 /* TextFieldM.swift */; };
 		CE9633FD21AE8E3C00FFBD14 /* TableDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */; };
 		CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */; };
+		CEA0AE7D21B439B600DBBD9E /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */; };
 		CEE552F121AE8947009DE56F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE552F021AE8947009DE56F /* AppDelegate.swift */; };
 		CEE552F321AE8947009DE56F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE552F221AE8947009DE56F /* ViewController.swift */; };
 		CEE552F621AE8947009DE56F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F421AE8947009DE56F /* Main.storyboard */; };
@@ -23,9 +26,12 @@
 		1AF3F3BB071F0A8975E61863 /* Pods_iDoIt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iDoIt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62DE0E1099187D30FA5EB63C /* Pods-iDoIt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iDoIt.release.xcconfig"; path = "Pods/Target Support Files/Pods-iDoIt/Pods-iDoIt.release.xcconfig"; sourceTree = "<group>"; };
 		80ED119AC253B3107EB09611 /* Pods-iDoIt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iDoIt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iDoIt/Pods-iDoIt.debug.xcconfig"; sourceTree = "<group>"; };
+		CE2DEB3221B3E272002AEFCA /* FirstPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageViewController.swift; sourceTree = "<group>"; };
 		CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManagerViewController.swift; sourceTree = "<group>"; };
+		CE684F2B21B4910D008666A8 /* TextFieldM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldM.swift; sourceTree = "<group>"; };
 		CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDataModel.swift; sourceTree = "<group>"; };
 		CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
+		CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		CEE552ED21AE8947009DE56F /* iDoIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDoIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE552F021AE8947009DE56F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEE552F221AE8947009DE56F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +90,9 @@
 				CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */,
 				CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */,
 				CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */,
+				CE684F2B21B4910D008666A8 /* TextFieldM.swift */,
+				CE2DEB3221B3E272002AEFCA /* FirstPageViewController.swift */,
+				CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */,
 				CEE552F421AE8947009DE56F /* Main.storyboard */,
 				CEE552F721AE8949009DE56F /* Assets.xcassets */,
 				CEE552F921AE8949009DE56F /* LaunchScreen.storyboard */,
@@ -217,7 +226,10 @@
 				CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */,
 				CEE5530321AE8C19009DE56F /* DataManager.swift in Sources */,
 				CEE552F321AE8947009DE56F /* ViewController.swift in Sources */,
+				CE684F2C21B4910D008666A8 /* TextFieldM.swift in Sources */,
+				CE2DEB3321B3E272002AEFCA /* FirstPageViewController.swift in Sources */,
 				CE9633FD21AE8E3C00FFBD14 /* TableDataModel.swift in Sources */,
+				CEA0AE7D21B439B600DBBD9E /* LoginPageViewController.swift in Sources */,
 				CE44026B21B1CE39009E0300 /* GroupManagerViewController.swift in Sources */,
 				CEE552F121AE8947009DE56F /* AppDelegate.swift in Sources */,
 			);
