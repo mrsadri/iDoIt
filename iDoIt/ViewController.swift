@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AccessToTableView {
+@objc protocol AccessToTableView {
     func reloadTableData()
     func selfDismiss()
 }
@@ -17,6 +17,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     static var delegateOfGroupManagerPage : AccessToGroupManagerPage!
     
+    @IBOutlet weak var userNameLabel: UILabel!
+    func setUserNameLabel(){
+        let attributedText = NSMutableAttributedString(string: "\(DataManager.sharedObject.userData.firstName) \(DataManager.sharedObject.userData.lastName)", attributes: [NSAttributedString.Key.font: UIFont.init(name: "ChalkBoard SE", size: 26) ?? UIFont.systemFont(ofSize: 24), NSAttributedString.Key.foregroundColor: UIColor.white])
+        userNameLabel.attributedText = attributedText
+    }
     var dataToLoadThisTable :  [TableDataModel] = [ TableDataModel(groupData: (groupName: "Loading...", groupID: "Loading..."), tasksData: [(taskName: "Tasks are loading...", taskID: "1", taskDescription: "Wait..", doneStatus: true )] ) ] {
         didSet{
             print("new Data is set")
@@ -47,6 +52,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return thisTitle
     }
     
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.font = UIFont.init(name: "ChalkBoard SE", size: 15) ?? UIFont.systemFont(ofSize: 15)
+        header.textLabel!.textColor = UIColor.black
+//        header.backgroundView?.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 0.8)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var howManyCells = Int()
         howManyCells = dataToLoadThisTable[section].tasksData.count + 1
@@ -55,21 +68,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-            if indexPath.row < dataToLoadThisTable[indexPath.section].tasksData.count {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "thisCell", for: indexPath)
-                
-                let attributedText = NSMutableAttributedString(string: dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].taskName, attributes: [NSAttributedString.Key.font: UIFont.init(name: "ChalkBoard SE", size: 17) ?? UIFont.systemFont(ofSize: 17), NSAttributedString.Key.foregroundColor: UIColor.white])
-                
-                cell.textLabel?.attributedText = attributedText
-                cell.imageView?.image = dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].doneStatus ? UIImage(named: "Done-False-iCon") : UIImage(named: "Done-True-iCon")
-                cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
-        return cell
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "lastCell", for: indexPath)
-                cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
-                return cell
-            }
+        if indexPath.row < dataToLoadThisTable[indexPath.section].tasksData.count {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "thisCell", for: indexPath)
+            
+            let attributedText = NSMutableAttributedString(string: dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].taskName, attributes: [NSAttributedString.Key.font: UIFont.init(name: "ChalkBoard SE", size: 17) ?? UIFont.systemFont(ofSize: 17), NSAttributedString.Key.foregroundColor: UIColor.white])
+            
+            cell.textLabel?.attributedText = attributedText
+            cell.imageView?.image = dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].doneStatus ? UIImage(named: "Done-True-iCon") : UIImage(named: "Done-False-iCon")
+            cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "lastCell", for: indexPath)
+            cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
+            return cell
+        }
     }
+    
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         
@@ -77,17 +91,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             //remove From server
             DataManager.sharedObject.deleteTask(task_id: self.dataToLoadThisTable[editActionsForRowAt.section].tasksData[editActionsForRowAt.row].taskID)
         }
-        remove.backgroundColor = .red
+        remove.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 0.8)
         
         let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
             self.editTask(indexPath: editActionsForRowAt)
         }
-        edit.backgroundColor = .lightGray
+        edit.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 0.8)
         
-        let done = UITableViewRowAction(style: .normal, title: "Done") { action, index in
-            print("Done button tapped")
+        let doneText : String = wholeDate[editActionsForRowAt.section].tasksData[editActionsForRowAt.row].doneStatus ? "UnDone" : "Done"
+        let done = UITableViewRowAction(style: .normal, title: doneText) { action, index in
+            wholeDate[editActionsForRowAt.section].tasksData[editActionsForRowAt.row].doneStatus = !wholeDate[editActionsForRowAt.section].tasksData[editActionsForRowAt.row].doneStatus
+            self.reloadTableData()
         }
-        done.backgroundColor = .green
+        done.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 1)
         
         return [done, edit, remove]
     }
@@ -105,37 +121,41 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if indexPath.row == dataToLoadThisTable[indexPath.section].tasksData.count {
             self.addNewTask(indexPath: indexPath)
         } else {
-        
-        let taskTitle       : String = dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].taskName
-        let taskDescription : String = dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].taskDescription
-        
-        let alert = UIAlertController(title: taskTitle, message: taskDescription , preferredStyle: .actionSheet)
-        
-        let action = UIAlertAction(title: "Edit Task", style: .default) { (action) in
-            print("Edit Task")
-            //---
-            self.editTask(indexPath: indexPath)
-            //---
             
-        }
-        
-        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
-            let taskId = self.dataToLoadThisTable[indexPath.section].tasksData[indexPath.item].taskID
-            DataManager.sharedObject.deleteTask(task_id: taskId)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            print("Cancel")
-        }
-        
-        
-        alert.addAction(action)
-        alert.addAction(cancelAction)
-        alert.addAction(removeAction)
-        
-        present(alert, animated: true) {
-            //do nothing
-        }
+            let taskTitle       : String = dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].taskName
+            let taskDescription : String = dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].taskDescription
+            
+            let alert = UIAlertController(title: taskTitle, message: taskDescription , preferredStyle: .actionSheet)
+            
+            let editAction = UIAlertAction(title: "Edit Task", style: .default) { (action) in
+                print("Edit Task")
+                //---
+                self.editTask(indexPath: indexPath)
+                //---
+                
+            }
+            
+            let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
+                let taskId = self.dataToLoadThisTable[indexPath.section].tasksData[indexPath.item].taskID
+                DataManager.sharedObject.deleteTask(task_id: taskId)
+            }
+            
+            let doneText : String = wholeDate[indexPath.section].tasksData[indexPath.row].doneStatus ? "UnDone" : "Done"
+            let doneAction = UIAlertAction(title: doneText, style: .default) { (action) in
+                wholeDate[indexPath.section].tasksData[indexPath.row].doneStatus = !wholeDate[indexPath.section].tasksData[indexPath.row].doneStatus
+                self.reloadTableData()
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            }
+            
+            alert.addAction(removeAction)
+            alert.addAction(editAction)
+            alert.addAction(doneAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true) {
+                //do nothing
+            }
         }
         self.mainTable.deselectRow(at: indexPath, animated: true)
     }
@@ -147,12 +167,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var mainTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         mainTable.delegate = self
         mainTable.dataSource = self
         self.mainTable.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
         DataManager.sharedObject.delegateToAcessTableView = self
         self.dataToLoadThisTable = wholeDate
+        setUserNameLabel()
     }
     
     
@@ -189,7 +209,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         alertToEditTask.addAction(addAction)
         alertToEditTask.addAction(cancelAction)
-
+        
         
         self.present(alertToEditTask, animated: true) {
             //do nothing
@@ -197,39 +217,39 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func addNewTask(indexPath : IndexPath){
-            
-            let groupID         : String = dataToLoadThisTable[indexPath.section].groupData.groupID
-            
-            let alertToEditTask = UIAlertController(title: "Add New Task", message: nil , preferredStyle: .alert )
-            
-            var newTaskTitle       = UITextField()
-            var newTaskDescription = UITextField()
-            
-            alertToEditTask.addTextField { (alertTexfieldTitle) in
-                alertTexfieldTitle.placeholder = "Enter Task Title"
-                newTaskTitle = alertTexfieldTitle
-            }
-            
-            alertToEditTask.addTextField { (alertTexfieldDescription) in
-                alertTexfieldDescription.placeholder = "Enter Task Description"
-                newTaskDescription = alertTexfieldDescription
-            }
-            
-            let addAction = UIAlertAction(title: "OK", style: .default) { (action) in
-                
-                DataManager.sharedObject.createTask(group_id: groupID, taskName: newTaskTitle.text!, taskDescription: newTaskDescription.text!)
-            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel ) { (action) in
-                print("Cancel Action")
-            }
-            
-            alertToEditTask.addAction(addAction)
-            alertToEditTask.addAction(cancelAction)
         
-            self.present(alertToEditTask, animated: true) {
-                //do nothing
-            }
+        let groupID         : String = dataToLoadThisTable[indexPath.section].groupData.groupID
+        
+        let alertToEditTask = UIAlertController(title: "Add New Task", message: nil , preferredStyle: .alert )
+        
+        var newTaskTitle       = UITextField()
+        var newTaskDescription = UITextField()
+        
+        alertToEditTask.addTextField { (alertTexfieldTitle) in
+            alertTexfieldTitle.placeholder = "Enter Task Title"
+            newTaskTitle = alertTexfieldTitle
+        }
+        
+        alertToEditTask.addTextField { (alertTexfieldDescription) in
+            alertTexfieldDescription.placeholder = "Enter Task Description"
+            newTaskDescription = alertTexfieldDescription
+        }
+        
+        let addAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            
+            DataManager.sharedObject.createTask(group_id: groupID, taskName: newTaskTitle.text!, taskDescription: newTaskDescription.text!)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel ) { (action) in
+            print("Cancel Action")
+        }
+        
+        alertToEditTask.addAction(addAction)
+        alertToEditTask.addAction(cancelAction)
+        
+        self.present(alertToEditTask, animated: true) {
+            //do nothing
+        }
         
     }
     
@@ -259,7 +279,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             //do nothing
         }
     }
-
+    
     
     @IBAction func logOutAction(_ sender: UIButton) {
         DataManager.sharedObject.tokenKeeper = ""

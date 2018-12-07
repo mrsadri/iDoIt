@@ -26,7 +26,8 @@ class FirstPageViewController: UIViewController, AccessToLoginRegistrationPage{
         
         changeAvabilityOfButton(to: false)
         thisToken = PListControl.sharedObject.userData.token
-        DataManager.sharedObject.tokenKeeper = PListControl.sharedObject.userData.token
+        DataManager.sharedObject.tokenKeeper = thisToken
+        DataManager.sharedObject.userData = (firstName: PListControl.sharedObject.userData.firstName , lastName: PListControl.sharedObject.userData.lastName)
         
         if thisToken == "" {
             changeAvabilityOfButton(to: true)

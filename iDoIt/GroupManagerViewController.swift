@@ -14,6 +14,11 @@ protocol AccessToGroupManagerPage {
 
 class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, AccessToGroupManagerPage {
     
+    @IBOutlet weak var userNameLabel: UILabel!
+    func setUserNameLabel(){
+        let attributedText = NSMutableAttributedString(string: "\(DataManager.sharedObject.userData.firstName) \(DataManager.sharedObject.userData.lastName)", attributes: [NSAttributedString.Key.font: UIFont.init(name: "ChalkBoard SE", size: 26) ?? UIFont.systemFont(ofSize: 24), NSAttributedString.Key.foregroundColor: UIColor.white])
+        userNameLabel.attributedText = attributedText
+    }
     var dataToLoadGroupTable : [(groupName: String, groupID: String)] = [(groupName: "Loading...", groupID: "Loading...")] {
         didSet{
             //nothing
@@ -27,7 +32,6 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
             let aGroupData = wholeDate[index].groupData
             dataToLoadGroupTable.append(aGroupData)
         }
-        print(dataToLoadGroupTable)
         }
         self.groupTable.reloadData()
     }
@@ -39,10 +43,18 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == dataToLoadGroupTable.count {
             let cell = groupTable.dequeueReusableCell(withIdentifier: "lastGroupCell", for: indexPath)
+            cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
             return cell
         } else {
             let cell = groupTable.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath)
-            cell.textLabel?.text = dataToLoadGroupTable[indexPath.row].groupName
+            let text : String = {
+                var thisText : String = ""
+                thisText =  String(dataToLoadGroupTable[indexPath.row].groupName).uppercased()
+                return thisText
+                }()
+            let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.font: UIFont.init(name: "ChalkBoard SE", size: 15) ?? UIFont.systemFont(ofSize: 15), NSAttributedString.Key.foregroundColor: UIColor.black])
+            cell.textLabel?.attributedText = attributedText
+            cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
             return cell
         }
 
@@ -55,12 +67,12 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
                 let groupID = self.dataToLoadGroupTable[editActionsForRowAt.row].groupID
                 DataManager.sharedObject.deleteGroup(group_id: groupID)
             }
-            remove.backgroundColor = .red
+            remove.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 0.8)
             
             let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
                 self.editGroup(indexPath: editActionsForRowAt)
             }
-            edit.backgroundColor = .lightGray
+            edit.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 1.0)
             
             return [edit, remove]
     }
@@ -138,7 +150,6 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
             //do nothing
         }
     }
-
     
     func addNewGroup(){
         
@@ -176,8 +187,8 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
         print("------ \nDebug:here a delegate is its own value")
         groupTable.delegate = self
         groupTable.dataSource = self
-
-        // Do any additional setup after loading the view.
+        self.groupTable.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
+        setUserNameLabel()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
