@@ -16,7 +16,7 @@
 		CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */; };
 		CEA0AE7D21B439B600DBBD9E /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */; };
 		CEE552F121AE8947009DE56F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE552F021AE8947009DE56F /* AppDelegate.swift */; };
-		CEE552F321AE8947009DE56F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE552F221AE8947009DE56F /* ViewController.swift */; };
+		CEE552F321AE8947009DE56F /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE552F221AE8947009DE56F /* MainPageViewController.swift */; };
 		CEE552F621AE8947009DE56F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F421AE8947009DE56F /* Main.storyboard */; };
 		CEE552F821AE8949009DE56F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F721AE8949009DE56F /* Assets.xcassets */; };
 		CEE552FB21AE8949009DE56F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE552F921AE8949009DE56F /* LaunchScreen.storyboard */; };
@@ -36,7 +36,7 @@
 		CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		CEE552ED21AE8947009DE56F /* iDoIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDoIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE552F021AE8947009DE56F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CEE552F221AE8947009DE56F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CEE552F221AE8947009DE56F /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
 		CEE552F521AE8947009DE56F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CEE552F721AE8949009DE56F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEE552FA21AE8949009DE56F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 				CEE552F021AE8947009DE56F /* AppDelegate.swift */,
 				CEE5530221AE8C19009DE56F /* DataManager.swift */,
 				CE816D1321B94E4100EA9461 /* PListControl.swift */,
-				CEE552F221AE8947009DE56F /* ViewController.swift */,
+				CEE552F221AE8947009DE56F /* MainPageViewController.swift */,
 				CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */,
 				CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */,
 				CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */,
@@ -236,7 +236,7 @@
 			files = (
 				CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */,
 				CEE5530321AE8C19009DE56F /* DataManager.swift in Sources */,
-				CEE552F321AE8947009DE56F /* ViewController.swift in Sources */,
+				CEE552F321AE8947009DE56F /* MainPageViewController.swift in Sources */,
 				CE2DEB3321B3E272002AEFCA /* FirstPageViewController.swift in Sources */,
 				CE9633FD21AE8E3C00FFBD14 /* TableDataModel.swift in Sources */,
 				CE17E37E21B54CA500FAE9DB /* RegisterPageViewController.swift in Sources */,

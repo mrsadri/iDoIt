@@ -183,7 +183,7 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
         super.viewDidLoad()
 //        let mainTablePage = storyboard?.instantiateViewController(withIdentifier: "mainPage") as! ViewController
 //        mainTablePage.delegateOfGroupManagerPage = self
-        ViewController.delegateOfGroupManagerPage = self
+        MainPageViewController.delegateOfGroupManagerPage = self
         print("------ \nDebug:here a delegate is its own value")
         groupTable.delegate = self
         groupTable.dataSource = self
