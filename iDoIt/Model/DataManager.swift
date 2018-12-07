@@ -112,6 +112,10 @@ class DataManager {
                     self.tokenKeeper = self.responseKeeper.header["token"].stringValue
                     self.userData.firstName = self.responseKeeper.body  ["body"]["first_name"].stringValue
                     self.userData.lastName  = self.responseKeeper.body["body"]["last_name" ].stringValue
+                    //self.createGroup(groupName: "First Group")
+                    let newTempData = TableDataModel(groupData: (groupName: "First Group", groupID: "fake"), tasksData: [(taskName: "A temporary Task", taskID: "fake", taskDescription: "This task is temporary and you won't see it again when log in to your account.", doneStatus: true), (taskName: "Swipe Me!", taskID: "fake2", taskDescription: "This task is temporary and you won't see it again when log in to your account.", doneStatus: false)])
+                    self.tableSections.append(newTempData)
+                    self.isReadyToReload = true
                 } else {
                     self.tokenKeeper = ""
                     print("Registration Faild :X")

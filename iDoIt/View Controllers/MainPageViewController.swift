@@ -24,8 +24,15 @@ class MainPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     var dataToLoadThisTable :  [TableDataModel] = [ TableDataModel(groupData: (groupName: "Loading...", groupID: "Loading..."), tasksData: [(taskName: "Tasks are loading...", taskID: "1", taskDescription: "Wait..", doneStatus: true )] ) ] {
         didSet{
-            print("new Data is set")
+
         }
+        
+        willSet(newValue) {
+            if newValue.count == 0 {
+                
+            }
+        }
+        
     }
     
     var isGroupManagerPageActivated = Bool()
