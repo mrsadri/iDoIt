@@ -28,10 +28,10 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
     func reloadTableData() {
         dataToLoadGroupTable = []
         if wholeDate.count > 0 {
-        for index in 0...wholeDate.count-1 {
-            let aGroupData = wholeDate[index].groupData
-            dataToLoadGroupTable.append(aGroupData)
-        }
+            for index in 0...wholeDate.count-1 {
+                let aGroupData = wholeDate[index].groupData
+                dataToLoadGroupTable.append(aGroupData)
+            }
         }
         self.groupTable.reloadData()
     }
@@ -51,30 +51,30 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
                 var thisText : String = ""
                 thisText =  String(dataToLoadGroupTable[indexPath.row].groupName).uppercased()
                 return thisText
-                }()
+            }()
             let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.font: UIFont.init(name: "ChalkBoard SE", size: 15) ?? UIFont.systemFont(ofSize: 15), NSAttributedString.Key.foregroundColor: UIColor.black])
             cell.textLabel?.attributedText = attributedText
             cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
             return cell
         }
-
+        
     }
     
     //---
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-            
-            let remove = UITableViewRowAction(style: .normal, title: "Remove") { action, index in
-                let groupID = self.dataToLoadGroupTable[editActionsForRowAt.row].groupID
-                DataManager.sharedObject.deleteGroup(group_id: groupID)
-            }
-            remove.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 0.8)
-            
-            let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
-                self.editGroup(indexPath: editActionsForRowAt)
-            }
-            edit.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 1.0)
-            
-            return [edit, remove]
+        
+        let remove = UITableViewRowAction(style: .normal, title: "Remove") { action, index in
+            let groupID = self.dataToLoadGroupTable[editActionsForRowAt.row].groupID
+            DataManager.sharedObject.deleteGroup(group_id: groupID)
+        }
+        remove.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 0.8)
+        
+        let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+            self.editGroup(indexPath: editActionsForRowAt)
+        }
+        edit.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 1.0)
+        
+        return [edit, remove]
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -181,8 +181,8 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
     @IBOutlet weak var groupTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let mainTablePage = storyboard?.instantiateViewController(withIdentifier: "mainPage") as! ViewController
-//        mainTablePage.delegateOfGroupManagerPage = self
+        //        let mainTablePage = storyboard?.instantiateViewController(withIdentifier: "mainPage") as! ViewController
+        //        mainTablePage.delegateOfGroupManagerPage = self
         MainPageViewController.delegateOfGroupManagerPage = self
         print("------ \nDebug:here a delegate is its own value")
         groupTable.delegate = self
@@ -199,14 +199,14 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
         DataManager.sharedObject.tokenKeeper = ""
         DataManager.sharedObject.tableSections = []
         DataManager.sharedObject.isItFirstTimeToSetWholeData = true
-    
+        
         
         self.dismiss(animated: false) {
-        DataManager.sharedObject.delegateToAcessTableView.selfDismiss()
+            DataManager.sharedObject.delegateToAcessTableView.selfDismiss()
             
         }
         
-
+        
         
     }
     

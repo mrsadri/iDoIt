@@ -14,7 +14,7 @@ import UIKit
 }
 
 class LoginPageViewController: UIViewController, UITextFieldDelegate, AccessToLoginRegistrationPage {
-
+    
     @IBOutlet weak var blueBack: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var loginPanel: UIImageView!
@@ -28,7 +28,7 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate, AccessToLo
         self.setupLayout()
         self.emailTextField.delegate = self
         self.pTextField.delegate = self
-
+        
         // Do any additional setup after loading the view.
     }
     

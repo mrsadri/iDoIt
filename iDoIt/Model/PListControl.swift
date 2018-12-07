@@ -32,12 +32,12 @@ class PListControl {
         
         if (!fileManager.fileExists(atPath: pathUserDataPList)) {
             setZeroValuToUserDeflautPList()
-//            let success:Bool = plistContent.write(toFile: pathWholeDataPList, atomically: true)
-//            if success {
-//                print("file has been created!")
-//            }else{
-//                print("unable to create the file")
-//            }
+            //            let success:Bool = plistContent.write(toFile: pathWholeDataPList, atomically: true)
+            //            if success {
+            //                print("file has been created!")
+            //            }else{
+            //                print("unable to create the file")
+            //            }
         } else {
             print("file already exist")
         }
@@ -93,10 +93,10 @@ class PListControl {
     func readFromUserDataPList () -> [String : String] {
         
         var returner : [String : String] = [:]
-
-            if let dic = NSDictionary(contentsOfFile: pathUserDataPList) as? [String: String]{
-                returner = dic
-            }
+        
+        if let dic = NSDictionary(contentsOfFile: pathUserDataPList) as? [String: String]{
+            returner = dic
+        }
         print(returner)
         return returner
     }
@@ -104,9 +104,9 @@ class PListControl {
     func readFromWholeDataPList() -> [[String]] {
         
         var returner : [[String]] = []
-
-            if let array = NSArray(contentsOfFile: pathWholeDataPList) as? [[String]] {
-                returner = array
+        
+        if let array = NSArray(contentsOfFile: pathWholeDataPList) as? [[String]] {
+            returner = array
         }
         print(returner)
         return returner

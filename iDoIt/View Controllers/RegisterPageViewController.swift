@@ -29,7 +29,7 @@ class RegisterPageViewController: UIViewController, UITextFieldDelegate, AccessT
         self.lastNameTextField.delegate = self
         self.emailTextField.delegate = self
         self.pTextField.delegate = self
-       // --
+        // --
         
         // Do any additional setup after loading the view.
     }
@@ -43,7 +43,7 @@ class RegisterPageViewController: UIViewController, UITextFieldDelegate, AccessT
     }
     
     @IBAction func registerButton(_ sender: UIButton) {
-     registerAction()
+        registerAction()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -96,7 +96,7 @@ class RegisterPageViewController: UIViewController, UITextFieldDelegate, AccessT
         registerButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         registerButton.leadingAnchor.constraint(equalTo: blueBack.leadingAnchor, constant: 35 * modifyRate).isActive = true
         registerButton.heightAnchor.constraint(equalTo: registerButton.widthAnchor, multiplier: 53/286 ).isActive = true
-
+        
         registerPanel.translatesAutoresizingMaskIntoConstraints = false
         registerPanel.bottomAnchor.constraint(equalTo: registerButton.topAnchor, constant: -10 * modifyRate).isActive = true
         registerPanel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true

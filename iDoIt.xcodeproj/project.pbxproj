@@ -13,7 +13,6 @@
 		CE44026B21B1CE39009E0300 /* GroupManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */; };
 		CE816D1421B94E4100EA9461 /* PListControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE816D1321B94E4100EA9461 /* PListControl.swift */; };
 		CE9633FD21AE8E3C00FFBD14 /* TableDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */; };
-		CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */; };
 		CEA0AE7D21B439B600DBBD9E /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */; };
 		CEE552F121AE8947009DE56F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE552F021AE8947009DE56F /* AppDelegate.swift */; };
 		CEE552F321AE8947009DE56F /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE552F221AE8947009DE56F /* MainPageViewController.swift */; };
@@ -32,7 +31,6 @@
 		CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManagerViewController.swift; sourceTree = "<group>"; };
 		CE816D1321B94E4100EA9461 /* PListControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListControl.swift; sourceTree = "<group>"; };
 		CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDataModel.swift; sourceTree = "<group>"; };
-		CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
 		CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		CEE552ED21AE8947009DE56F /* iDoIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDoIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE552F021AE8947009DE56F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,12 +63,32 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CE0D169B21BB20AB008E2B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CEE5530221AE8C19009DE56F /* DataManager.swift */,
+				CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */,
+				CE816D1321B94E4100EA9461 /* PListControl.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CE0D169C21BB20C6008E2B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CEE552F421AE8947009DE56F /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		CE17E37C21B54C2700FAE9DB /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				CE2DEB3221B3E272002AEFCA /* FirstPageViewController.swift */,
 				CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */,
 				CE17E37D21B54CA500FAE9DB /* RegisterPageViewController.swift */,
+				CEE552F221AE8947009DE56F /* MainPageViewController.swift */,
+				CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -97,14 +115,9 @@
 			isa = PBXGroup;
 			children = (
 				CEE552F021AE8947009DE56F /* AppDelegate.swift */,
-				CEE5530221AE8C19009DE56F /* DataManager.swift */,
-				CE816D1321B94E4100EA9461 /* PListControl.swift */,
-				CEE552F221AE8947009DE56F /* MainPageViewController.swift */,
-				CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */,
-				CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */,
-				CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */,
+				CE0D169B21BB20AB008E2B9E /* Model */,
 				CE17E37C21B54C2700FAE9DB /* View Controllers */,
-				CEE552F421AE8947009DE56F /* Main.storyboard */,
+				CE0D169C21BB20C6008E2B9E /* View */,
 				CEE552F721AE8949009DE56F /* Assets.xcassets */,
 				CEE552F921AE8949009DE56F /* LaunchScreen.storyboard */,
 				CEE552FC21AE8949009DE56F /* Info.plist */,
@@ -234,7 +247,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */,
 				CEE5530321AE8C19009DE56F /* DataManager.swift in Sources */,
 				CEE552F321AE8947009DE56F /* MainPageViewController.swift in Sources */,
 				CE2DEB3321B3E272002AEFCA /* FirstPageViewController.swift in Sources */,

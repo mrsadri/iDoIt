@@ -20,7 +20,7 @@ class FirstPageViewController: UIViewController, AccessToLoginRegistrationPage{
         DataManager.sharedObject.delegateToAccessLoginPage = self
         
         
-
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         
@@ -34,7 +34,7 @@ class FirstPageViewController: UIViewController, AccessToLoginRegistrationPage{
         }
     }
     @IBAction func loginButton(_ sender: Any) {
-
+        
     }
     
     func loadTheApplication(){

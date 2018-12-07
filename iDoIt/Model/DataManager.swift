@@ -55,10 +55,10 @@ class DataManager {
             print("The new ttoken is \"\(tokenKeeper)\"")
             if tokenKeeper != "" {
                 // After setting Setting UserData, the token will be written to plist
-            self.getGroup()
+                self.getGroup()
             } else {
             }
-
+            
             //TODO: write the token to the PList evenif it is ""
             /* if token == "" {present login view} else {
              1: Update self.tableRows
@@ -82,10 +82,10 @@ class DataManager {
     var responseKeeper : (body: JSON, header: JSON) = (body: JSON(""), header: JSON(""))
     var tableSections = [TableDataModel]()  {
         didSet{
-                    }
+        }
     }
-
-
+    
+    
     private init() {
         print(PListControl.sharedObject)
     }

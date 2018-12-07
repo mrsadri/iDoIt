@@ -57,7 +57,7 @@ class MainPageViewController: UIViewController, UITableViewDataSource, UITableVi
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont.init(name: "ChalkBoard SE", size: 15) ?? UIFont.systemFont(ofSize: 15)
         header.textLabel!.textColor = UIColor.black
-//        header.backgroundView?.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 0.8)
+        //        header.backgroundView?.backgroundColor = UIColor(red: 132/255 , green: 180/255 , blue: 196/255, alpha: 0.8)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
