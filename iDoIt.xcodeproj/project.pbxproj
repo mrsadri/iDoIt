@@ -11,6 +11,7 @@
 		CE17E37E21B54CA500FAE9DB /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17E37D21B54CA500FAE9DB /* RegisterPageViewController.swift */; };
 		CE2DEB3321B3E272002AEFCA /* FirstPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2DEB3221B3E272002AEFCA /* FirstPageViewController.swift */; };
 		CE44026B21B1CE39009E0300 /* GroupManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */; };
+		CE816D1421B94E4100EA9461 /* PListControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE816D1321B94E4100EA9461 /* PListControl.swift */; };
 		CE9633FD21AE8E3C00FFBD14 /* TableDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */; };
 		CE9633FF21AEB73B00FFBD14 /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */; };
 		CEA0AE7D21B439B600DBBD9E /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */; };
@@ -29,6 +30,7 @@
 		CE17E37D21B54CA500FAE9DB /* RegisterPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
 		CE2DEB3221B3E272002AEFCA /* FirstPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageViewController.swift; sourceTree = "<group>"; };
 		CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManagerViewController.swift; sourceTree = "<group>"; };
+		CE816D1321B94E4100EA9461 /* PListControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListControl.swift; sourceTree = "<group>"; };
 		CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDataModel.swift; sourceTree = "<group>"; };
 		CE9633FE21AEB73B00FFBD14 /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
 		CEA0AE7C21B439B600DBBD9E /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
@@ -94,8 +96,9 @@
 		CEE552EF21AE8947009DE56F /* iDoIt */ = {
 			isa = PBXGroup;
 			children = (
-				CEE5530221AE8C19009DE56F /* DataManager.swift */,
 				CEE552F021AE8947009DE56F /* AppDelegate.swift */,
+				CEE5530221AE8C19009DE56F /* DataManager.swift */,
+				CE816D1321B94E4100EA9461 /* PListControl.swift */,
 				CEE552F221AE8947009DE56F /* ViewController.swift */,
 				CE9633FC21AE8E3B00FFBD14 /* TableDataModel.swift */,
 				CE44026A21B1CE39009E0300 /* GroupManagerViewController.swift */,
@@ -239,6 +242,7 @@
 				CE17E37E21B54CA500FAE9DB /* RegisterPageViewController.swift in Sources */,
 				CEA0AE7D21B439B600DBBD9E /* LoginPageViewController.swift in Sources */,
 				CE44026B21B1CE39009E0300 /* GroupManagerViewController.swift in Sources */,
+				CE816D1421B94E4100EA9461 /* PListControl.swift in Sources */,
 				CEE552F121AE8947009DE56F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

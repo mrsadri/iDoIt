@@ -8,12 +8,15 @@
 
 import UIKit
 
-protocol AccessToLoginRegistrationPage {
-    func loadTheApplication()
-}
+
 class LoginRegisterViewController: UIViewController , AccessToLoginRegistrationPage {
+    func changeAvabilityOfButton(to flag: Bool) {
+        //
+    }
+    
 
     
+
     @IBOutlet weak var segmentControll: UISegmentedControl!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!

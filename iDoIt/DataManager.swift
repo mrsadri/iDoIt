@@ -53,8 +53,12 @@ class DataManager {
     var tokenKeeper : String = "" {
         didSet{
             print("The new ttoken is \"\(tokenKeeper)\"")
+            if tokenKeeper != "" {
+                // After setting Setting UserData, the token will be written to plist
             self.getGroup()
-            
+            } else {
+            }
+
             //TODO: write the token to the PList evenif it is ""
             /* if token == "" {present login view} else {
              1: Update self.tableRows
@@ -63,21 +67,28 @@ class DataManager {
              }*/
         }
         willSet(Value) {
-            if Value != "" {
-                //present login page
+            if Value == "" {
+                PListControl.sharedObject.setZeroValuToUserDeflautPList()
             }
         }
     }
     var userData : (firstName: String, lastName: String) = ("",""){
         didSet{
+            PListControl.sharedObject.updateUserDataPlist(token: tokenKeeper, firstName: userData.firstName, lastName: userData.lastName)
             //Call VC func to write name again
             //Write name to the PList
         }
     }
     var responseKeeper : (body: JSON, header: JSON) = (body: JSON(""), header: JSON(""))
-    var tableSections = [TableDataModel]()
-    
-    private init() {}
+    var tableSections = [TableDataModel]()  {
+        didSet{
+                    }
+    }
+
+
+    private init() {
+        print(PListControl.sharedObject)
+    }
     
     static let sharedObject = DataManager.init()
     
@@ -103,6 +114,9 @@ class DataManager {
                     self.userData.lastName  = self.responseKeeper.body["body"]["last_name" ].stringValue
                 } else {
                     self.tokenKeeper = ""
+                    print("Registration Faild :X")
+                    //TODO: Allert user to try again and refresh thir fields
+                    self.delegateToAccessLoginPage.changeAvabilityOfButton!(to: true)
                 }
             }
         }
@@ -129,6 +143,7 @@ class DataManager {
                     self.tokenKeeper = ""
                     print("Connection Matters at login process")
                     //TODO: Active Allert to Try Again
+                    self.delegateToAccessLoginPage.changeAvabilityOfButton!(to: true)
                 }
             }
         }
@@ -232,9 +247,9 @@ class DataManager {
                             self.groupIDKeeperTemp.append(groupDataM.groupID)
                         }
                     }
-                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.getTasksQueue), userInfo: nil, repeats: true)
+                    self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.getTasksQueue), userInfo: nil, repeats: true)
                 } else {
-                    print("Connection matters")
+                    print("User is not Legged in")
                     //nothing
                 }
                 //---

@@ -57,10 +57,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
             if indexPath.row < dataToLoadThisTable[indexPath.section].tasksData.count {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "thisCell", for: indexPath)
-                cell.textLabel?.text  = dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].taskName
+                
+                let attributedText = NSMutableAttributedString(string: dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].taskName, attributes: [NSAttributedString.Key.font: UIFont.init(name: "ChalkBoard SE", size: 17) ?? UIFont.systemFont(ofSize: 17), NSAttributedString.Key.foregroundColor: UIColor.white])
+                
+                cell.textLabel?.attributedText = attributedText
+                cell.imageView?.image = dataToLoadThisTable[indexPath.section].tasksData[indexPath.row].doneStatus ? UIImage(named: "Done-False-iCon") : UIImage(named: "Done-True-iCon")
+                cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
         return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "lastCell", for: indexPath)
+                cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
                 return cell
             }
     }
@@ -144,6 +150,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Do any additional setup after loading the view, typically from a nib.
         mainTable.delegate = self
         mainTable.dataSource = self
+        self.mainTable.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
         DataManager.sharedObject.delegateToAcessTableView = self
         self.dataToLoadThisTable = wholeDate
     }
@@ -276,7 +283,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func selfDismiss() {
-        self.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

@@ -8,14 +8,42 @@
 
 import UIKit
 
-class FirstPageViewController: UIViewController {
+class FirstPageViewController: UIViewController, AccessToLoginRegistrationPage{
     
+    @IBOutlet weak var createAccountBtn: UIButton!
+    @IBOutlet weak var loginBtn: UIButton!
+    
+    var thisToken : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataManager.sharedObject.isItFirstTimeToSetWholeData = true
+        DataManager.sharedObject.delegateToAccessLoginPage = self
+        
+        
 
-
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        
+        changeAvabilityOfButton(to: false)
+        thisToken = PListControl.sharedObject.userData.token
+        DataManager.sharedObject.tokenKeeper = PListControl.sharedObject.userData.token
+        
+        if thisToken == "" {
+            changeAvabilityOfButton(to: true)
+        }
     }
     @IBAction func loginButton(_ sender: Any) {
 
     }
+    
+    func loadTheApplication(){
+        let mainPage = storyboard?.instantiateViewController(withIdentifier: "mainPage")
+        self.present(mainPage!, animated: true, completion: nil)
+    }
+    
+    func changeAvabilityOfButton(to flag: Bool){
+        createAccountBtn.isEnabled = flag
+        loginBtn.isEnabled = flag
+    }
+    
 }

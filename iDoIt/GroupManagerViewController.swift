@@ -188,16 +188,19 @@ class GroupManagerViewController: UIViewController, UITableViewDelegate,UITableV
         DataManager.sharedObject.tokenKeeper = ""
         DataManager.sharedObject.tableSections = []
         DataManager.sharedObject.isItFirstTimeToSetWholeData = true
-        self.dismiss(animated: true) {
-            //nothing
-        }
+    
+        
+        self.dismiss(animated: false) {
         DataManager.sharedObject.delegateToAcessTableView.selfDismiss()
+            
+        }
+        
 
         
     }
     
     @IBAction func backButton(_ sender: UIButton) {
-        self.dismiss(animated: true) {
+        self.dismiss(animated: false) {
             //nothing
         }
     }

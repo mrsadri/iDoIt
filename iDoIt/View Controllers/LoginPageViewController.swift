@@ -8,7 +8,12 @@
 
 import UIKit
 
-class LoginPageViewController: UIViewController, UITextFieldDelegate{
+@objc protocol AccessToLoginRegistrationPage {
+    func loadTheApplication()
+    @objc optional func changeAvabilityOfButton(to flag:Bool)
+}
+
+class LoginPageViewController: UIViewController, UITextFieldDelegate, AccessToLoginRegistrationPage {
 
     @IBOutlet weak var blueBack: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
@@ -18,10 +23,25 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataManager.sharedObject.isItFirstTimeToSetWholeData = true
+        DataManager.sharedObject.delegateToAccessLoginPage = self
         self.setupLayout()
         self.emailTextField.delegate = self
         self.pTextField.delegate = self
+
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loginButton.isEnabled = true
+    }
+    
+    func changeAvabilityOfButton(to flag: Bool){
+        loginButton.isEnabled = flag
+    }
+    
+    @IBAction func loginButton(_ sender: UIButton) {
+        loginAction()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -32,12 +52,26 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate{
             // Not found, so remove keyboard.
             textField.resignFirstResponder()
             print("Loading Action.........")
+            loginAction()
         }
         // Do not add a line break
         return false
         
     }
     
+    func loginAction(){
+        if loginButton.isEnabled {
+            let email : String = emailTextField.text ?? "No Email"
+            let thisPass : String = pTextField.text ?? "Ali123"
+            DataManager.sharedObject.login(email: email, password: thisPass)
+            loginButton.isEnabled = false
+        }
+    }
+    
+    func loadTheApplication(){
+        let mainPage = storyboard?.instantiateViewController(withIdentifier: "mainPage")
+        self.present(mainPage!, animated: true, completion: nil)
+    }
     
     func setupLayout() {
         blueBack.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +92,7 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate{
         loginButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: blueBack.leadingAnchor, constant: 35 * modifyRate).isActive = true
         loginButton.heightAnchor.constraint(equalTo: loginButton.widthAnchor, multiplier: 53/286 ).isActive = true
-
+        
         loginPanel.translatesAutoresizingMaskIntoConstraints = false
         loginPanel.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -10 * modifyRate).isActive = true
         loginPanel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
@@ -66,19 +100,17 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate{
         loginPanel.heightAnchor.constraint(equalTo: loginPanel.widthAnchor, multiplier: 84/279).isActive = true
         
         pTextField.translatesAutoresizingMaskIntoConstraints = false
-        pTextField.bottomAnchor.constraint(equalTo: loginPanel.bottomAnchor, constant: -12 * modifyRate).isActive = true
-        pTextField.leadingAnchor.constraint(equalTo: loginPanel.leadingAnchor, constant: 100 * modifyRate).isActive = true
+        pTextField.bottomAnchor.constraint(equalTo: loginPanel.bottomAnchor, constant: -14).isActive = true
+        pTextField.leadingAnchor.constraint(equalTo: loginPanel.centerXAnchor, constant: -30).isActive = true
         pTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
         pTextField.trailingAnchor.constraint(equalTo: loginPanel.trailingAnchor, constant: -14).isActive = true
         
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        emailTextField.topAnchor.constraint(equalTo: loginPanel.topAnchor, constant: 14 * modifyRate).isActive = true
-        emailTextField.leadingAnchor.constraint(equalTo: loginPanel.leadingAnchor, constant: 100 * modifyRate).isActive = true
+        emailTextField.topAnchor.constraint(equalTo: loginPanel.topAnchor, constant: 14 ).isActive = true
+        emailTextField.leadingAnchor.constraint(equalTo: loginPanel.centerXAnchor, constant: -30).isActive = true
         emailTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
         emailTextField.trailingAnchor.constraint(equalTo: loginPanel.trailingAnchor, constant: -14).isActive = true
-
+        
     }
     
-
-
 }

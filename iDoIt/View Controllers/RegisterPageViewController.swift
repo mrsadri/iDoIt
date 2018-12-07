@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegisterPageViewController: UIViewController, UITextFieldDelegate{
+class RegisterPageViewController: UIViewController, UITextFieldDelegate, AccessToLoginRegistrationPage{
     
     
     @IBOutlet weak var blueBack: UIImageView!
@@ -22,6 +22,8 @@ class RegisterPageViewController: UIViewController, UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataManager.sharedObject.isItFirstTimeToSetWholeData = true
+        DataManager.sharedObject.delegateToAccessLoginPage = self
         self.setupLayout()
         self.firstNameTextField.delegate = self
         self.lastNameTextField.delegate = self
@@ -32,6 +34,17 @@ class RegisterPageViewController: UIViewController, UITextFieldDelegate{
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        registerButton.isEnabled = true
+    }
+    
+    func changeAvabilityOfButton(to flag: Bool){
+        registerButton.isEnabled = flag
+    }
+    
+    @IBAction func registerButton(_ sender: UIButton) {
+     registerAction()
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Try to find next responder
@@ -41,11 +54,27 @@ class RegisterPageViewController: UIViewController, UITextFieldDelegate{
             // Not found, so remove keyboard.
             textField.resignFirstResponder()
             print("Register Action.........")
+            registerAction()
         }
         // Do not add a line break
         return false
     }
     
+    func registerAction() {
+        if registerButton.isEnabled {
+            let name : String = firstNameTextField.text ?? "No Name"
+            let lastName : String = lastNameTextField.text ?? "No Last Name"
+            let email : String = emailTextField.text ?? "No Email"
+            let thisPass : String = pTextField.text ?? "Ali123"
+            DataManager.sharedObject.register(firstName: name, lastName: lastName, password: thisPass, email: email)
+            registerButton.isEnabled = false
+        }
+    }
+    
+    func loadTheApplication(){
+        let mainPage = storyboard?.instantiateViewController(withIdentifier: "mainPage")
+        self.present(mainPage!, animated: true, completion: nil)
+    }
     
     
     func setupLayout() {
