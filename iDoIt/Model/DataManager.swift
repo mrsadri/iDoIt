@@ -117,10 +117,10 @@ class DataManager {
                 if self.responseKeeper.body["message"].stringValue == "ok" {
                     
                     self.pleaseSetFakeData = true
-                    
-                    self.tokenKeeper = self.responseKeeper.header["token"].stringValue
                     self.userData.firstName = self.responseKeeper.body  ["body"]["first_name"].stringValue
                     self.userData.lastName  = self.responseKeeper.body["body"]["last_name" ].stringValue
+                    self.tokenKeeper = self.responseKeeper.header["token"].stringValue
+
                     //self.createGroup(groupName: "First Group")
                 } else {
                     self.tokenKeeper = ""
