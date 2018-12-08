@@ -17,6 +17,7 @@ class MainPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     static var delegateOfGroupManagerPage : AccessToGroupManagerPage!
     
+    @IBOutlet weak var firstGroupButton: UIButton!
     @IBOutlet weak var userNameLabel: UILabel!
     func setUserNameLabel(){
         let attributedText = NSMutableAttributedString(string: "\(DataManager.sharedObject.userData.firstName) \(DataManager.sharedObject.userData.lastName)", attributes: [NSAttributedString.Key.font: UIFont.init(name: "ChalkBoard SE", size: 26) ?? UIFont.systemFont(ofSize: 24), NSAttributedString.Key.foregroundColor: UIColor.white])
@@ -29,7 +30,9 @@ class MainPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         willSet(newValue) {
             if newValue.count == 0 {
-                
+                firstGroupButton.isHidden = false
+            } else {
+                firstGroupButton.isHidden = true
             }
         }
         

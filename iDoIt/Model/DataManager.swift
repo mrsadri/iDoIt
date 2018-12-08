@@ -28,6 +28,8 @@ class DataManager {
     var groupIDKeeperTemp : [String] = []
     
     var isItFirstTimeToSetWholeData : Bool?
+    var pleaseSetFakeData : Bool = false
+    
     var isReadyToReload : Bool = false {
         willSet(new){
             if new {
@@ -54,18 +56,23 @@ class DataManager {
         didSet{
             print("The new ttoken is \"\(tokenKeeper)\"")
             if tokenKeeper != "" {
-                // After setting Setting UserData, the token will be written to plist
+                // After setting Setting UserData, the token will be written to plist Automatically
+                
+                if pleaseSetFakeData {
+                    let newTempData = TableDataModel(groupData: (groupName: "Temp Group", groupID: "fake"), tasksData: [(taskName: "A temporary Task", taskID: "fake", taskDescription: "This task is temporary and you won't see it again when log in to your account or when you close and open the app again", doneStatus: true), (taskName: "Swipe Me!", taskID: "fake2", taskDescription: "This task is temporary and you won't see it again when log in to your account.", doneStatus: false)])
+
+                    self.tableSections.append(newTempData)
+                    pleaseSetFakeData = false
+                    isReadyToReload = true
+                } else {
                 self.getGroup()
-            } else {
+                }
+            
+                
             }
             
-            //TODO: write the token to the PList evenif it is ""
-            /* if token == "" {present login view} else {
-             1: Update self.tableRows
-             2: Write tableRows to PList
-             3: Reload Table
-             }*/
         }
+        
         willSet(Value) {
             if Value == "" {
                 PListControl.sharedObject.setZeroValuToUserDeflautPList()
@@ -100,7 +107,6 @@ class DataManager {
                               "last_name"   : lastName,
                               "password"    : password,
                               "email"       : email]
-        
         Alamofire.request(thisUrl, method: .post, parameters: bodyparameters , headers: headers).responseJSON { (response) in
             if response.result.isSuccess {
                 //---
@@ -109,13 +115,13 @@ class DataManager {
                 self.responseKeeper = (body: jsonKeeperBody, header: jsonKeeperHeader)
                 //---
                 if self.responseKeeper.body["message"].stringValue == "ok" {
+                    
+                    self.pleaseSetFakeData = true
+                    
                     self.tokenKeeper = self.responseKeeper.header["token"].stringValue
                     self.userData.firstName = self.responseKeeper.body  ["body"]["first_name"].stringValue
                     self.userData.lastName  = self.responseKeeper.body["body"]["last_name" ].stringValue
                     //self.createGroup(groupName: "First Group")
-                    let newTempData = TableDataModel(groupData: (groupName: "First Group", groupID: "fake"), tasksData: [(taskName: "A temporary Task", taskID: "fake", taskDescription: "This task is temporary and you won't see it again when log in to your account.", doneStatus: true), (taskName: "Swipe Me!", taskID: "fake2", taskDescription: "This task is temporary and you won't see it again when log in to your account.", doneStatus: false)])
-                    self.tableSections.append(newTempData)
-                    self.isReadyToReload = true
                 } else {
                     self.tokenKeeper = ""
                     print("Registration Faild :X")
