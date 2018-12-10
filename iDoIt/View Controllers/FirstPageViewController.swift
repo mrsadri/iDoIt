@@ -25,9 +25,9 @@ class FirstPageViewController: UIViewController, AccessToLoginRegistrationPage{
     override func viewDidAppear(_ animated: Bool) {
         
         changeAvabilityOfButton(to: false)
+        DataManager.sharedObject.userData = (firstName: PListControl.sharedObject.userData.firstName , lastName: PListControl.sharedObject.userData.lastName)
         thisToken = PListControl.sharedObject.userData.token
         DataManager.sharedObject.tokenKeeper = thisToken
-        DataManager.sharedObject.userData = (firstName: PListControl.sharedObject.userData.firstName , lastName: PListControl.sharedObject.userData.lastName)
         
         if thisToken == "" {
             changeAvabilityOfButton(to: true)

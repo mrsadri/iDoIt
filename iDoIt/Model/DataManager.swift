@@ -1,6 +1,5 @@
 //
 //  TalkToServer.swift
-//  ToDoList
 //
 //  Created by MSadri on 11/12/18.
 //  Copyright © 2018 MSadri. All rights reserved.
@@ -55,33 +54,34 @@ class DataManager {
     var tokenKeeper : String = "" {
         didSet{
             print("The new ttoken is \"\(tokenKeeper)\"")
+
+
             if tokenKeeper != "" {
+                PListControl.sharedObject.updateUserDataPlist (token: tokenKeeper, firstName: userData.firstName, lastName: userData.lastName)
                 // After setting Setting UserData, the token will be written to plist Automatically
                 
                 if pleaseSetFakeData {
                     let newTempData = TableDataModel(groupData: (groupName: "Temp Group", groupID: "fake"), tasksData: [(taskName: "A temporary Task", taskID: "fake", taskDescription: "This task is temporary and you won't see it again when log in to your account or when you close and open the app again", doneStatus: true), (taskName: "Swipe Me!", taskID: "fake2", taskDescription: "This task is temporary and you won't see it again when log in to your account.", doneStatus: false)])
-
                     self.tableSections.append(newTempData)
                     pleaseSetFakeData = false
                     isReadyToReload = true
                 } else {
                 self.getGroup()
                 }
-            
-                
+            } else {
+                PListControl.sharedObject.setZeroValuToUserDeflautPList()
             }
             
         }
         
         willSet(Value) {
             if Value == "" {
-                PListControl.sharedObject.setZeroValuToUserDeflautPList()
             }
         }
     }
     var userData : (firstName: String, lastName: String) = ("",""){
         didSet{
-            PListControl.sharedObject.updateUserDataPlist(token: tokenKeeper, firstName: userData.firstName, lastName: userData.lastName)
+
             //Call VC func to write name again
             //Write name to the PList
         }
@@ -146,9 +146,9 @@ class DataManager {
                 self.responseKeeper = (body: jsonKeeperBody, header: jsonKeeperHeader)
                 //---
                 if self.responseKeeper.body["message"].stringValue == "ok" {
-                    self.tokenKeeper = self.responseKeeper.header["token"].stringValue
                     self.userData.firstName = self.responseKeeper.body  ["body"]["first_name"].stringValue
                     self.userData.lastName  = self.responseKeeper.body["body"]["last_name" ].stringValue
+                    self.tokenKeeper = self.responseKeeper.header["token"].stringValue
                 } else {
                     self.tokenKeeper = ""
                     print("Connection Matters at login process")
@@ -263,7 +263,6 @@ class DataManager {
                     //nothing
                 }
                 //---
-                //TODO: impliment Loading Bar |||| here tell to Home Screen How much does it take
             }
         }
     }
@@ -508,13 +507,4 @@ class DataManager {
     
 }
 //valid toket : /*"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzYwYWM4ZWQtMzhkMy00ZjUzLWE3YjItOWFkOWIzYmRhNjRhIiwiaWF0IjoxNTM5MjUwNTg2fQ.exeb-WXsM06aWMtInkQcaoK7hKJ9NGrUpQUsHkKBdIk", */
-//- Note: SingleTone pattern is not suitable for this case and I have to use delegation pattern
-//- TODO: Define a requester func to call alamofire with header, body, and url and return bodyJSON and HeaderJSON :Done
-//- TODO: if token == "" ban all this funcs: get_Group, createGroup, ...
-//- TODO: if JSON message == "ok" { successFlag = true } :Done in other way
-//- TODO: Encapsulate this Class (ie these methodes: get_Group, createGroup, ...) with reloadTable Data, then move requester method to TalkToServer Class
-//- TODO: reload tabelData in success clouser in all methodes
 //- TODO: Impliment Base URL
-//- Challenge: Update Part of a task
-//- Challenge: find task position by its title name
-

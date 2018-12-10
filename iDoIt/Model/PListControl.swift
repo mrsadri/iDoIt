@@ -49,14 +49,15 @@ class PListControl {
         writeToPlist(toWhere: .UserData)
         getUserDataPlist()
     }
-    
-    func updateUserDataPlist(token : String, firstName: String, lastName: String) {
+
+    func updateUserDataPlist(token : String , firstName: String , lastName: String ) {
         input = ["token" : token, "firstName" : firstName, "lastName" : lastName]
         writeToPlist(toWhere: .UserData)
     }
     
     func getUserDataPlist() {
         let data = readFromUserDataPList()
+        //Warning
         userData =  (token: (data["token"])! , firstName: (data["firstName"])!, lastName: (data["lastName"])!)
     }
     
